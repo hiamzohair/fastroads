@@ -1,0 +1,29 @@
+<script>
+
+var password;
+var cacheExpiration = 1 * 60 * 60 * 100; // 12 hours in milliseconds
+var passwordtologin = "FreePalestine"
+
+// Check if password is stored in local storage
+if (localStorage.getItem("password") && localStorage.getItem("timestamp")) {
+  var currentTime = new Date().getTime();
+  var storedTime = localStorage.getItem("timestamp");
+  if (currentTime - storedTime < cacheExpiration) {
+    password = localStorage.getItem("password");
+  } else {
+    localStorage.removeItem("password");
+    localStorage.removeItem("timestamp");
+    password = prompt('Enter your password for this website.\n','');
+  }
+} else {
+  password = prompt('Ohne Passwort kommst du hier nicht weiter!\n','');
+}
+
+if (password == passwordtologin) {
+  localStorage.setItem("password", password);
+  localStorage.setItem("timestamp", new Date().getTime());
+} else {
+  window.location = "index";
+}
+
+</script>
